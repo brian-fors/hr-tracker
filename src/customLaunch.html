@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=10"/>
+    <title>Bilirubin Chart SMART Application</title>
+    <link href="images/favicon.ico" rel="icon" type="image/x-icon"/>
+
+    <link rel="stylesheet" href="libs/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/app.css">
+
+    <script src="libs/fhir-client/fhir-client.js"></script>
+    <script src="libs/jquery-2.1.4/jquery.min.js"></script>
+    <script src="js/launch.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row vertical-offset-200">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1 class="panel-title">HSPC Bilirubin Risk Chart</h1>
+                </div>
+                <div class="panel-body">
+                    <form accept-charset="UTF-8" role="form">
+                        <fieldset>
+                            <div class="form-group">
+                                <input id="client_id" class="form-control" placeholder="client id" type="text">
+                            </div>
+                            <div class="form-group">
+                                <input id="redirect_uri" class="form-control" placeholder="redirect uri" type="text"
+                                       value="">
+                            </div>
+                            <div class="form-group">
+                                <textarea id="scopes" class="form-control" rows="3" placeholder="scopes" required>launch online_access patient/Patient.read patient/Observation.read patient/Observation.write</textarea>
+                            </div>
+                            <br/>
+                            <input class="btn btn-lg btn-success btn-block" type="button" value="Custom Launch"
+                                   onclick="doLaunch();">
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function doLaunch() {
+            var client_id = document.getElementById("client_id").value;
+            var redirect_uri = document.getElementById("redirect_uri").value;
+            var scopes = document.getElementById("scopes").value;
+            if (client_id !== null && redirect_uri !== null && scopes !== null) {
+                FHIR.oauth2.authorize({
+                    "client_id": client_id,
+                    "scope": scopes,
+                    "redirect_uri": redirect_uri
+                });
+            } else {
+                alert("Please enter client id and redirect uri.");
+            }
+        }
+    </script>
+</div>
+</body>
+</html>

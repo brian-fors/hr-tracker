@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="hrtrackerApp">
+	<head>
+		<meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="IE=10">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>HR tracker</title>
+        <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
+
+		<link rel="stylesheet" href="libs/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/app.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="libs/IE/html5shiv-3.7.0/html5shiv.js"></script>
+			<script src="libs/IE/respond-1.4.2/respond.min.js"></script>
+
+		<![endif]-->
+	</head>
+	<body ng-controller="hrtrackerCtrl" ng-cloak>
+		<header ng-show="showPatientBanner" class="navbar navbar-inverse navbar-static-top" ng-cloak role="navigation">
+			<p class="navbar-brand"><span class="glyphicon glyphicon-user"></span>{{patient.name}}</p>
+			<p class="navbar-text">sex <span class="title">{{patient.sex}}</span></p>
+			<p class="navbar-text">dob <span class="title">{{patient.dob | date: 'dd MMM yyyy HH:mm'}}</span></p>
+			<p class="navbar-text">age <span class="title">{{patient.dob | age}}</span></p>
+            <img style="position:absolute;z-index: 1000; right:15px;top:3px;height: 45px" src="images/ge_monogram_primary_white_RGB.png">
+		</header>
+		<div ng-class="showPatientBanner ? 'container-fluid' : 'container-fluid-no-banner'">
+			<div class="row" style="height: 100%">
+				<highchart config="chartConfig" class="col-xs-6" style="height: 100%"></highchart>
+				<div class="col-xs-6">
+                    <table class="layout-table"><tr><td>
+
+                    <table class="table table-striped">
+						<tr>
+							<th>Date/Time</th>
+							<th>Result (mg/dL) </th>
+							<th>Age (Hrs)</th>
+							<th>Value:Test</th>
+							<th>Risk Zone</th>
+						</tr>
+						<tr ng-repeat="value in hrvalues | orderBy:currentFhirVersion.obsDateTimePath">
+							<td><div class="form-group" style="width: 125px">
+                                {{value[currentFhirVersion.obsDateTimePath] | date:'MM/dd/yyyy HH:mm'}}
+                                </div>
+                            </td>
+							<td><div class="form-group" style="width: 125px">
+                                {{value.valueQuantity.value}}
+                            </div>
+                            </td>
+                            <td>{{hours(value[currentFhirVersion.obsDateTimePath], patient.dob) | number:2}}</td>
+							<td style="text-transform: capitalize;">{{value.code.coding[0].display}}</td>
+							<td>{{risk(value.valueQuantity.value, hours(value[currentFhirVersion.obsDateTimePath], patient.dob))}}</td>
+						</tr>
+                        <tr ng-if="!isReadOnly" ng-show="enterObsVisible">
+                               <td>
+                                   <div class="form-group" style="width: 125px">
+                                       <input id="obsDate" type="text" ng-model="$parent.obsDate" ng-class="$parent.obsDateIsValid ? 'form-control' : 'invalid-form-control'">
+                                   </div>
+                               </td>
+                               <td>
+                                   <div class="form-group" style="width: 50px">
+                                         <input id="obsValue" type="text" ng-model="$parent.obsValue" ng-class="$parent.obsValueIsValid ? 'form-control' : 'invalid-form-control'">
+                                   </div>
+                               </td>
+                               <td>
+                                    {{hours(obsDate, patient.dob) | textOrNumber:2}}
+                               </td>
+                                <td>Transcutaneous Bilirubin</td>
+                                <td>
+                                    {{risk(obsValue, hours(obsDate, patient.dob))}}
+                                </td>
+                        </tr>
+                        <tr ng-if="!isReadOnly"></tr>
+                        <tr ng-if="!isReadOnly" ng-hide="enterObsVisible">
+                            <td colspan="5">
+                                <input type="image" src="images/32x32_circle_add_plus.png" ng-click="toggleObsVisible()" class="image-btn" />
+                            </td>
+                        </tr>
+                    </table>
+                    </td></tr>
+                        <tr ng-if="!isReadOnly"><td>
+                        <table>
+                            <tr ng-show="enterObsVisible">
+                                <td>
+                                    <button type="button" ng-click="saveObs($parent.obsDate, $parent.obsValue); toggleObsVisible()"
+                                            class="btn-input btn btn-default" ng-disabled="isSaveDisabled">Save</button>
+                                </td>
+                                <td>
+                                    <button type="button" ng-click="clearNewPoint(); setDefaults(); toggleObsVisible()"
+                                            class="btn-input btn btn-default">Cancel</button>
+                                </td>
+                            </tr>
+                        </table>
+                        </td></tr>
+                    </table>
+				</div>
+			</div>
+		</div>
+		<script src="libs/jquery-2.1.4/jquery.min.js"></script>
+		<script src="libs/angular-1.4.7/angular.min.js"></script>
+		<script src="libs/highcharts/highcharts.js"></script>
+		<script src="libs/highcharts/highcharts-more.js"></script>
+		<script src="libs/highcharts/highcharts-ng.min.js"></script>
+		<script src="libs/fhir-client/fhir-client.js"></script>
+        <!--<script src="fhir-client/jquery.js"></script>-->
+        <script src="js/app.js"></script>
+		<script src="js/services.js"></script>
+		<script src="js/controllers.js"></script>
+		<script src="js/filters.js"></script>
+    </body>
+</html>

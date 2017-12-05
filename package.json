@@ -1,0 +1,17 @@
+{
+  "name": "hr-tracker",
+  "version": "1.0.1",
+  "scripts": {
+    "serve": "./node_modules/http-server/bin/http-server src -p 8088 --cors",
+    "start-server": "serve -s -p8088",
+    "port": "8088"
+  },
+  "dependencies": {
+    "serve": "^5.2.1"
+  },
+  "devDependencies": {
+    "http-server": "^0.10.0"
+  },
+  "license": "Apache-2.0",
+  "repository": "https://github.com/brian-fors/hr-tracker.git"
+}

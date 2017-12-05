@@ -1,0 +1,25 @@
+[
+  {
+    "fhir_service": "http://localhost:8071/data",
+    "redirect_uri": "http://localhost:8088/index.html",
+    "client_id": "hr-tracker"
+  },
+  {
+    "provider": "cerner",
+    "fhir_service": "https://fhir-ehr.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca",
+    "redirect_uri": "http://localhost:8088/index.html",
+    "client_id": "7c2b20f7-8390-4a36-9b5c-6c43d1386a2f"
+  },
+  {
+    "provider": "epic",
+    "fhir_service": "https://open-ic.epic.com/FHIR/api/FHIR/DSTU2",
+    "redirect_uri": "http://localhost:8088/index.html",
+    "client_id": "7c2b20f7-8390-4a36-9b5c-6c43d1386a2f"
+  },
+  {
+    "provider": "smart",
+    "fhir_service": "https://fhir-api-dstu2.smarthealthit.org",
+    "redirect_uri": "http://localhost:8088/index.html",
+    "client_id": "7c2b20f7-8390-4a36-9b5c-6c43d1386a2f"
+  }
+]
