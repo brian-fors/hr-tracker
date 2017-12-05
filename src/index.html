@@ -8,7 +8,8 @@
         <link href="images/favicon.ico" rel="icon" type="image/x-icon" />
 
 		<link rel="stylesheet" href="libs/bootstrap-3.3.5-dist/css/bootstrap.min.css">
-		<link rel="stylesheet" href="css/app.css">
+		<!--link rel="stylesheet" href="css/app.css"-->
+        <link rel="stylesheet" href="css/hac-ca-common.css">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -20,10 +21,10 @@
 	</head>
 	<body ng-controller="hrtrackerCtrl" ng-cloak>
 		<header ng-show="showPatientBanner" class="navbar navbar-inverse navbar-static-top" ng-cloak role="navigation">
-			<p class="navbar-brand"><span class="glyphicon glyphicon-user"></span>{{patient.name}}</p>
-			<p class="navbar-text">sex <span class="title">{{patient.sex}}</span></p>
-			<p class="navbar-text">dob <span class="title">{{patient.dob | date: 'dd MMM yyyy HH:mm'}}</span></p>
-			<p class="navbar-text">age <span class="title">{{patient.dob | age}}</span></p>
+			<p class="navbar-brand"><span class="glyphicon glyphicon-user"></span> {{patient.name}}</p>
+			<p class="navbar-text">Gender: <span class="title">{{patient.sex}}</span></p>
+			<p class="navbar-text">DOB: <span class="title">{{patient.dob | date: 'dd MMM yyyy HH:mm'}}</span></p>
+			<p class="navbar-text">Age: <span class="title">{{patient.dob | age}}</span></p>
             <img style="position:absolute;z-index: 1000; right:15px;top:3px;height: 45px" src="images/ge_monogram_primary_white_RGB.png">
 		</header>
 		<div ng-class="showPatientBanner ? 'container-fluid' : 'container-fluid-no-banner'">

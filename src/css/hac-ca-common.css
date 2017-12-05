@@ -1,0 +1,407 @@
+/* Import HDX variables etc. here, and import this file into other hac-ca- less files */
+/* -----------------------------------
+    HDX extensions and overwrites
+----------------------------------- */
+/* HAC-CA app specific style: overwrites and extensions to HDX defaults */
+body.app {
+  overflow-y: hidden;
+  font-family: "GE Inspira", "ge-inspira", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 14px;
+  background-color: #ffffff;
+  color: #575757;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+  /* -----------------------------------
+        Elements (base styles)
+    ----------------------------------- */
+  /* -----------------------------------
+        Components (derived elements)
+    ----------------------------------- */
+  /* -----------------------------------
+        Styles
+    ----------------------------------- */
+  /* -----------------------------------
+        Required / mandatory
+    ----------------------------------- */
+  /* -----------------------------------
+        Info / warning / error classes
+    ----------------------------------- */
+  /* -----------------------------------
+        Icons
+    ----------------------------------- */
+  /* Separator icons */
+}
+body.app textarea,
+body.app p,
+body.app label,
+body.app table td,
+body.app input,
+body.app select,
+body.app button,
+body.app .btn,
+body.app .dropdown-menu {
+  font-size: 14px;
+}
+body.app a {
+  cursor: pointer;
+}
+body.app .btn-group > button > span {
+  display: inline-block;
+  min-width: 3em;
+}
+body.app .btn-group .dropdown-menu {
+  overflow-scrolling: auto;
+  -webkit-overflow-scrolling: touch;
+}
+body.app .btn-group .dropdown-menu li a {
+  display: block;
+  padding: 0.8em 2em 0.8em 0.8em;
+  height: 100%;
+}
+body.app .btn-group.ng-invalid button,
+body.app .btn-group.ng-invalid-required button {
+  border-color: #ee3625;
+}
+body.app .modal-header {
+  font-size: 1.5em;
+}
+body.app .modal-header i {
+  font-size: 1.5em;
+  vertical-align: middle;
+  font-weight: bolder;
+}
+body.app .modal-header.error {
+  background: #c62f27;
+  color: #ffffff;
+}
+body.app .modal-header.info {
+  background: #1483b2;
+  color: #ffffff;
+}
+body.app .modal-body {
+  padding: 2em;
+}
+body.app .hac-date-picker input,
+body.app .hac-time-picker input {
+  margin: 0;
+}
+body.app .hac-date-picker.ng-invalid input:not(:disabled),
+body.app .hac-time-picker.ng-invalid input:not(:disabled) {
+  border-color: #ee3625 !important;
+}
+body.app .hac-date-picker {
+  width: 10em;
+}
+body.app .hac-time-picker {
+  width: 8em;
+}
+body.app input.ng-invalid:not(:disabled),
+body.app textarea.ng-invalid:not(:disabled) {
+  border-color: #ee3625;
+}
+body.app .close-button {
+  cursor: pointer;
+}
+body.app .close-button:hover {
+  color: #454545;
+}
+body.app .close-button:active {
+  color: #0098d6;
+}
+body.app textarea:disabled,
+body.app input:disabled,
+body.app select:disabled,
+body.app .btn-group > button:disabled,
+body.app .btn-group > button:disabled,
+body.app .hac-numeric-component button:disabled,
+body.app .hac-numeric-component .btn:disabled,
+body.app .hac-date-picker button:disabled,
+body.app .hac-date-picker .btn:disabled,
+body.app .hac-time-picker button:disabled,
+body.app .hac-time-picker .btn:disabled {
+  background-color: #ffffff;
+  color: #575757;
+  border-color: #e6e6e6;
+}
+body.app button:disabled,
+body.app .btn:disabled {
+  background-color: #f4f4f4;
+  color: #575757;
+  opacity: 0.5;
+}
+body.app button.active:disabled,
+body.app .btn:active:disabled,
+body.app .btn-group label.active {
+  color: #ffffff;
+}
+body.app .hac-text-link:disabled {
+  background-color: transparent;
+  border: 0;
+}
+body.app .required:before {
+  content: "\f41f";
+  font-family: ge-iconography-webfont;
+  font-size: 0.6em;
+  margin-right: 0.5em;
+  vertical-align: middle;
+  color: red;
+}
+body.app [class*="hac-info"] {
+  padding: 0.2em 0.3em 0.2em 0.3em;
+}
+body.app [class*="hac-info"] i {
+  vertical-align: middle;
+}
+body.app .hac-info-warning {
+  color: #e87724;
+}
+body.app .hac-info-warning-box {
+  display: inline-block;
+  background-color: #ea7600;
+  color: #ffffff;
+  border-radius: 3px;
+}
+body.app .hac-info-danger {
+  color: red;
+}
+body.app .icon-order-status-ongoing {
+  content: url("../images/ico_ordernow_sm.svg");
+}
+body.app .icon-order-status-planned {
+  content: url("../images/ico_ordernext_sm.svg");
+}
+body.app .icon-order-status-inactive {
+  content: url("../images/ico_orderprev_sm.svg");
+}
+body.app .icon-order-status-inactiveinfusion {
+  content: url("../images/ico_orderalert_sm.svg");
+}
+body.app .separator {
+  display: inline-block;
+  margin: 0 0.4em 0 0.4em;
+}
+body.app .medium-dash:before {
+  content: "\2013";
+}
+body.app .entity-arrow-right:before {
+  content: "\2192";
+}
+body.app button.btn:focus {
+  border: 1px solid #0098d6;
+}
+body.err {
+  background-color: #ffffff;
+}
+.hac-text-link {
+  font: "GE Inspira", "ge-inspira", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  cursor: pointer;
+  text-decoration: underline;
+  color: blue;
+  background-color: transparent;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+.hac-text-link:active,
+.hac-text-link:focus {
+  border: 0;
+  outline: 0;
+  color: #0098d6;
+}
+.hac-help-block-invalid {
+  color: #ee3625;
+}
+.hac-help-block-info {
+  color: #0098d6;
+}
+/* -----------------------------------
+    Components
+----------------------------------- */
+.no-results-message {
+  margin: 2em;
+  text-align: center;
+  font-style: italic;
+}
+input[type="text"] {
+  height: 34px;
+  margin: 0;
+}
+textarea {
+  margin: 0;
+}
+.hac-date-picker input,
+.hac-time-picker input,
+.hac-date-picker button,
+.hac-time-picker button,
+.hac-date-picker .btn,
+.hac-time-picker .btn {
+  height: 34px;
+}
+.hac-date-picker button,
+.hac-time-picker button,
+.hac-date-picker .btn,
+.hac-time-picker .btn {
+  width: 36px;
+}
+.datepicker table tr td.today,
+.datepicker table tr td.today:hover,
+.datepicker table tr td.today.disabled,
+.datepicker table tr td.today.disabled:hover {
+  font-weight: bolder !important;
+  background-color: #e1e1e1 !important;
+  background-image: none !important;
+}
+.datepicker td,
+.datapicker th {
+  width: 2.1rem !important;
+  height: 2.1rem !important;
+}
+.datepicker tfoot th.clear {
+  cursor: pointer;
+}
+.datepicker tfoot th.clear:hover {
+  text-decoration: underline;
+  background-color: none !important;
+  background: none !important;
+}
+.datepicker td {
+  border: 1px solid transparent;
+}
+.datepicker td.focused {
+  /*border: 1px solid @cyan;*/
+  outline: 1px solid #0098d6;
+}
+.bootstrap-timepicker-widget {
+  width: auto;
+  min-width: 125px;
+}
+.bootstrap-timepicker-widget table td a i {
+  margin-top: 2px;
+  font-size: 2.5em;
+  width: 1em;
+}
+.bootstrap-timepicker-widget table td a i:hover {
+  width: 1em;
+}
+.bootstrap-timepicker-widget a.today {
+  cursor: pointer;
+  color: #0098d6;
+}
+.bootstrap-timepicker-widget a.today:hover {
+  text-decoration: underline;
+  color: #0098d6;
+}
+.bootstrap-timepicker-widget a.clear {
+  cursor: pointer;
+  font-weight: bold;
+  color: #454545;
+}
+.bootstrap-timepicker-widget a.clear:hover {
+  text-decoration: underline;
+  font-weight: bold;
+  color: #454545;
+}
+.bootstrap-timepicker-widget td.separator {
+  margin: 0;
+  display: table-cell;
+}
+input[hac-reset-field] {
+  padding-right: 2em;
+}
+input[hac-reset-field]::-ms-clear {
+  display: none;
+}
+input[hac-reset-field]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+i.input-icon-after {
+  font-size: 1em;
+  width: 1em;
+  position: absolute;
+  right: 0.8em;
+  top: 0.65em;
+  color: #bfbfbf;
+  cursor: pointer;
+}
+i.input-icon-after.ng-hide-add {
+  display: inline!important;
+  -webkit-animation: 0.3s fadeOut;
+  -moz-animation: 0.3s fadeOut;
+  -ms-animation: 0.3s fadeOut;
+  animation: 0.3s fadeOut;
+}
+i.input-icon-after.ng-hide-remove {
+  -webkit-animation: 0.5s fadeIn;
+  -moz-animation: 0.5s fadeIn;
+  -ms-animation: 0.5s fadeIn;
+  animation: 0.5s fadeIn;
+}
+.collapse-header {
+  padding: 0.5em 0 0.5em 0;
+  background-color: #E1E2E6;
+  border-top: 1px solid #D5D5D6;
+  border-bottom: 1px solid #D5D5D6;
+  cursor: pointer;
+}
+.collapse-header i {
+  display: inline-block;
+  width: 1em;
+  vertical-align: middle;
+  margin: 0 1em 0 1em;
+  transition-duration: 0.15s;
+}
+.collapse-header.collapsed i {
+  transform: rotate(-90deg);
+}
+.collapse-header > div {
+  display: inline-block;
+  vertical-align: middle;
+}
+.collapse-content.collapsed {
+  display: none;
+}
+.order-status .order-status-icon,
+.order-status .order-status-text {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5em;
+  font-size: 1.1em;
+}
+.order-summary .summary-inline-block {
+  display: inline-block;
+  white-space: nowrap;
+}
+.order-summary .order-summary-name {
+  font-weight: bold;
+  color: black;
+}
+.order-summary .order-summary-preparation:not(:first-of-type):before {
+  content: "+";
+  margin-left: 0.4em;
+  margin-right: 0.4em;
+}
+.order-summary .order-summary-preparation .order-summary-preparation-name {
+  font-weight: bold;
+  color: black;
+}
+.order-summary .order-summary-preparation .concentration {
+  margin-left: 0.4em;
+}
+.order-summary .order-summary-dosinglabel {
+  color: #0098d6;
+  text-transform: uppercase;
+}
+.order-summary .order-ending-notification-label {
+  color: #0098d6;
+  padding-left: 5px;
+}
+.ui-match {
+  background: yellow;
+}
+.highlight {
+  background-color: lightblue;
+}
