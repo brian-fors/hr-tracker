@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hrtrackerApp.controllers', []).controller('hrtrackerCtrl', ['$scope', '$risk','$filter', function ($scope, $risk, $filter ) {
+angular.module('hrtrackerApp.controllers', []).controller('hrtrackerCtrl', ['$scope', '$filter', function ($scope, $filter ) {
     $scope.fhirVersions = [
         {
             "fhirVersion": ["0.5.0"],
@@ -32,11 +32,10 @@ angular.module('hrtrackerApp.controllers', []).controller('hrtrackerCtrl', ['$sc
 
     var newPoint = [];
     var lastPoint = [];
-    var bilirubin = [];
     var heartrate = [];
 
     $scope.$watchGroup(['obsValue', 'obsDate'], function() {
-        $scope.obsValueIsValid = (!isNaN($scope.obsValue) && $scope.obsValue > 0 && $scope.obsValue <= 25);
+        $scope.obsValueIsValid = (!isNaN($scope.obsValue) && $scope.obsValue > 0);
         $scope.obsDateIsValid = validateDate($scope.obsDate);
         if ($scope.obsValueIsValid && $scope.obsDateIsValid) {
             $scope.isSaveDisabled = false;
@@ -55,43 +54,12 @@ angular.module('hrtrackerApp.controllers', []).controller('hrtrackerCtrl', ['$sc
         $scope.enterObsVisible = !$scope.enterObsVisible;
     };
 
-    $scope.risk = function (bilirubinResult, ageInHours) {
-        if ((bilirubinResult > 20))
-            return 'Critical Risk Zone';
-        else if (bilirubinResult >= $risk.highRiskLowerLimit(ageInHours))
-            return 'High Risk Zone (>95%)';
-        else if (bilirubinResult >= $risk.highIntermediateLowerLimit(ageInHours))
-            return 'High Intermediate Risk Zone (75-95%)';
-        else if (bilirubinResult >= $risk.lowIntermediateLowerLimit(ageInHours))
-            return 'Low Intermediate Risk Zone (40-74%)';
-        else
-            return 'Low Risk Zone (<40%)';
-    };
-
-    var criticalRiskZone = [];
-    for (var int = 0; int <= 120; int++)
-        criticalRiskZone.push([int, 20, 25]);
-    var highRiskZone = [];
-    for (var int = 0; int <= 120; int++)
-        highRiskZone.push([int, $risk.highRiskLowerLimit(int), 20]);
-    var highIntermediateRiskZone = [];
-    for (var int = 0; int <= 120; int++)
-        highIntermediateRiskZone.push([int, $risk.highIntermediateLowerLimit(int), $risk.highRiskLowerLimit(int)]);
-    var lowIntermediateRiskZone = [];
-    for (var int = 0; int <= 120; int++)
-        lowIntermediateRiskZone.push([int, $risk.lowIntermediateLowerLimit(int), $risk.highIntermediateLowerLimit(int)]);
-    var lowRiskZone = [];
-    for (var int = 0; int <= 120; int++)
-        lowRiskZone.push([int, 0, $risk.lowIntermediateLowerLimit(int)]);
-
     function validateDate(date) {
         var newDate = new Date(date);
         if ( isNaN(newDate.getTime()))
             return false;
 
         return true;
-        //var ageHours = $scope.hours(newDate, $scope.patient.dob);
-        //return (0 <= ageHours && ageHours <=120)
     }
 
     $scope.clearNewPoint = function() {
@@ -139,7 +107,7 @@ angular.module('hrtrackerApp.controllers', []).controller('hrtrackerCtrl', ['$sc
 
         $scope.smart.api.create({type: "Observation", data: JSON.stringify(JSON.parse(newObs))})
             .done(function(){
-                queryBilirubinData($scope.smart);
+                queryHeartrateData($scope.smart);
             }).fail(function(){
                 console.log("failed to create observation", arguments);
             });
@@ -215,54 +183,6 @@ angular.module('hrtrackerApp.controllers', []).controller('hrtrackerCtrl', ['$sc
         return deferred;
     }
 
-    function queryBilirubinData(smart) {
-        var deferred = $.Deferred();
-
-        $.when(smart.patient.api.search({type: "Observation", query: {code: 'http://loinc.org|58941-6'}, count: 50}))
-            .done(function(obsSearchResult){
-                var observations = [];
-                if (obsSearchResult.data.entry) {
-                    obsSearchResult.data.entry.forEach(function(obs){
-                        obs.resource[$scope.currentFhirVersion.obsDateTimePath] = new Date (obs.resource[$scope.currentFhirVersion.obsDateTimePath]);
-                        observations.push(obs.resource);
-                    });
-                }
-                if(observations){
-                    $scope.values = $filter('orderBy')(observations,$scope.currentFhirVersion.obsDateTimePath);
-                }
-
-                var endDate = new Date($scope.patient.dob);
-                endDate.setTime(endDate.getTime() + (120*60*60*1000));
-
-                $scope.values = $scope.values.filter(function( obs ) {
-                    return (obs[$scope.currentFhirVersion.obsDateTimePath].toISOString() >= $scope.patient.dob.toISOString() &&
-                        obs[$scope.currentFhirVersion.obsDateTimePath].toISOString() <= endDate.toISOString());
-                });
-
-                while (bilirubin.length > 0) {
-                    bilirubin.pop();
-                }
-                angular.forEach($scope.values, function (value) {
-                    if(validateDate(value[$scope.currentFhirVersion.obsDateTimePath])) {
-                        bilirubin.push([$scope.hours(value[$scope.currentFhirVersion.obsDateTimePath], $scope.patient.dob), parseFloat(value.valueQuantity.value)]);
-                    }
-                });
-                while (lastPoint.length > 0) {
-                    lastPoint.pop();
-                }
-                if (bilirubin.length > 0) {
-                    lastPoint.push(bilirubin[bilirubin.length - 1]);
-                }
-
-                while (newPoint.length > 0) {
-                    newPoint.pop();
-                }
-                $scope.$apply();
-                deferred.resolve();
-            }).fail(function(){deferred.resolve();});
-        return deferred;
-    }
-
 
     function queryHeartrateData(smart) {
         var deferred = $.Deferred();
@@ -285,7 +205,7 @@ angular.module('hrtrackerApp.controllers', []).controller('hrtrackerCtrl', ['$sc
                 }
                 angular.forEach($scope.hrvalues, function (value) {
                     if(validateDate(value[$scope.currentFhirVersion.obsDateTimePath])) {
-                        heartrate.push([$scope.hours(value[$scope.currentFhirVersion.obsDateTimePath], $scope.patient.dob), parseFloat(value.valueQuantity.value)]);
+                        heartrate.push([value.effectiveDateTime, parseFloat(value.valueQuantity.value)]);
                     }
                 });
                 while (lastPoint.length > 0) {
@@ -315,12 +235,12 @@ angular.module('hrtrackerApp.controllers', []).controller('hrtrackerCtrl', ['$sc
                 queryHeartrateData(smart).done(function(){
                     $scope.$digest();
                 });
-                queryBilirubinData(smart).done(function(){
+                queryHeartrateData(smart).done(function(){
                     $scope.chartConfig = {
                         options: {
                             tooltip: {
                                 crosshairs: true,
-                                valueDecimals: 2,
+                                valueDecimals: 0,
                                 headerFormat: '<span style="font-size: 10px">{point.key:.2f}</span><br/>'
                             },
                             legend: {
@@ -333,79 +253,15 @@ angular.module('hrtrackerApp.controllers', []).controller('hrtrackerCtrl', ['$sc
                             gridLineWidth: 1,
                             tickInterval: 24,
                             title: {
-                                text: 'Postnatal Age (hours)'
+                                text: 'Date/time'
                             }
                         },
                         yAxis: {
                             minPadding: 0,
                             maxPadding: 0,
                             title: {
-                                text: 'Serum Bilirubin (mg/dl)'
-                            },
-                            plotLines: [
-                                {
-                                    value: 24,
-                                    color: 'transparent',
-                                    width: 1,
-                                    label: {
-                                        text: 'Critical Risk Zone',
-                                        align: 'center',
-                                        style: {
-                                            color: 'black'
-                                        }
-                                    }
-                                },
-                                {
-                                    value: 19,
-                                    color: 'transparent',
-                                    width: 1,
-                                    label: {
-                                        text: 'High Risk Zone (>95%)',
-                                        align: 'center',
-                                        style: {
-                                            color: 'black'
-                                        }
-                                    }
-                                },
-                                {
-                                    value: 13,
-                                    color: 'transparent',
-                                    width: 1,
-                                    label: {
-                                        text: 'High Intermediate Risk Zone (75-95%)',
-                                        align: 'center',
-                                        rotation: -25,
-                                        style: {
-                                            color: 'black'
-                                        }
-                                    }
-                                },
-                                {
-                                    value: 10.75,
-                                    color: 'transparent',
-                                    width: 1,
-                                    label: {
-                                        text: 'Low Intermediate Risk Zone (40-74%)',
-                                        align: 'center',
-                                        rotation: -20,
-                                        style: {
-                                            color: 'black'
-                                        }
-                                    }
-                                },
-                                {
-                                    value: 0.5,
-                                    color: 'transparent',
-                                    width: 1,
-                                    label: {
-                                        text: 'Low Risk Zone',
-                                        align: 'center',
-                                        style: {
-                                            color: 'black'
-                                        }
-                                    }
-                                }
-                            ]
+                                text: 'Heart rate (bpm)'
+                            },                                
                         },
                         plotOptions: {
                             series: {
@@ -414,57 +270,14 @@ angular.module('hrtrackerApp.controllers', []).controller('hrtrackerCtrl', ['$sc
                         },
                         series: [
                             {
-                                name: 'Critical Risk Zone',
-                                data: criticalRiskZone,
-                                color: '#FF0000',
-                                type: 'arearange'
-                            },
-                            {
-                                name: 'High Risk Zone (>95%)',
-                                data: highRiskZone,
-                                color: '#FF8040',
-                                type: 'arearange'
-                            },
-                            {
-                                name: 'High Intermediate Risk Zone (75-95%)',
-                                data: highIntermediateRiskZone,
-                                color: '#FFFF00',
-                                type: 'arearange'
-                            },
-                            {
-                                name: 'Low Intermediate Risk Zone (40-74%)',
-                                data: lowIntermediateRiskZone,
-                                color: '#00FF00',
-                                type: 'arearange'
-                            },
-                            {
-                                name: 'Low Risk Zone (<40%)',
-                                data: lowRiskZone,
-                                color: '#f7f7f7',
-                                type: 'arearange'
-                            },
-                            {
-                                name: 'New Bilirubin Result',
-                                data: newPoint,
-                                type: 'line',
-                                color: '#9a9a9a',
-                                dashStyle: 'dash',
-                                marker: {
-                                    lineWidth: 2,
-                                    symbol: 'circle',
-                                    radius: 3,
-                                    lineColor: null
-                                }
-                            },
-                            {
-                                name: 'Bilirubin',
-                                data: bilirubin,
+                                name: 'Heart rate',
+                                data: heartrate,
                                 color: '#0077FF',
                                 type: 'line'
                             }
                         ],
                         title: {
-                            text: 'Hour Specific Bilirubin Risk Chart for Term & Near-Term Infants with NO Additional Risk Factors'
+                            text: 'Heart rate chart (most recent 50 observations)'
                         },
                         credits: {
                             enabled: false
