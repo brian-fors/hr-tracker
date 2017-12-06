@@ -25,15 +25,22 @@
 			<p class="navbar-text">Gender: <span class="title">{{patient.sex}}</span></p>
 			<p class="navbar-text">DOB: <span class="title">{{patient.dob | date: 'dd MMM yyyy HH:mm'}}</span></p>
 			<p class="navbar-text">Age: <span class="title">{{patient.dob | age}}</span></p>
+            <button style="position:absolute;right:280px;top:10px" type="button" ng-click="connectDevice();" class="btn-input btn btn-default">Connect device</button>
             <img style="position:absolute;z-index: 1000; right:15px;top:3px;height: 45px" src="images/ge_monogram_primary_white_RGB.png">
 		</header>
 		<div ng-class="showPatientBanner ? 'container-fluid' : 'container-fluid-no-banner'">
-			<div class="row" style="height: 100%">
+            <div class="row" style="height: 10%">
+                <div class="col-xs-8"></div>
+                <div class="col-xs-4">
+                    
+                </div>
+            </div>
+			<div class="row" style="height: 90%">
 				<highchart config="chartConfig" class="col-xs-8" style="height: 100%"></highchart>
 				<div class="col-xs-4">
                     <table class="layout-table"><tr><td>
 
-                    <table class="table table-striped">
+                    <table class="table table-striped" style="height: 600px; overflow: scroll;">
 						<tr>
 							<th>Date/Time</th>
 							<th>Heart rate (bpm) </th>

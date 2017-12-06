@@ -113,6 +113,21 @@ angular.module('hrtrackerApp.controllers', []).controller('hrtrackerCtrl', ['$sc
             });
     };
 
+    $scope.connectDevice = function() {
+        alert("Device connected.");
+        var request = new XMLHttpRequest();
+        request.open("GET", "/data/vitals.xml", false);
+        request.send();
+        var xml = request.responseXML;
+        var observations = xml.getElementsByTagName("observation");
+        for(var i = 0; i < observations.length; i++) {
+            var obsValue = observations[i].getElementsByTagName("value")[0].childNodes[0].nodeValue;
+            var obsDate = observations[i].getElementsByTagName("date")[0].childNodes[0].nodeValue;
+            console.log(obsValue + " " + obsDate);
+            setTimeout($scope.saveObs(obsDate, obsValue), 3000);
+        }
+    }
+
     function formatObservation(format) {
         var args = Array.prototype.slice.call(arguments, 1);
         return format.replace(/{(\d+)}/g, function(match, number) {

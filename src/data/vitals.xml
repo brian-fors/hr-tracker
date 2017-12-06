@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<vitals>
+	<observation>
+		<id>1</id>
+		<type>hr</type>
+		<date>12-06-2017 13:49</date>
+		<value>68</value>
+		<unit>bpm</unit>
+	</observation>
+	<observation>
+		<id>2</id>
+		<type>hr</type>
+		<date>12-06-2017 13:50</date>
+		<value>69</value>
+		<unit>bpm</unit>
+	</observation>
+	<observation>
+		<id>3</id>
+		<type>hr</type>
+		<date>12-06-2017 13:51</date>
+		<value>70</value>
+		<unit>bpm</unit>
+	</observation>
+	<observation>
+		<id>4</id>
+		<type>hr</type>
+		<date>12-06-2017 13:52</date>
+		<value>65</value>
+		<unit>bpm</unit>
+	</observation>
+	<observation>
+		<id>5</id>
+		<type>hr</type>
+		<date>12-06-2017 13:53</date>
+		<value>66</value>
+		<unit>bpm</unit>
+	</observation>
+	<observation>
+		<id>6</id>
+		<type>hr</type>
+		<date>12-06-2017 13:54</date>
+		<value>68</value>
+		<unit>bpm</unit>
+	</observation>
+	<observation>
+		<id>7</id>
+		<type>hr</type>
+		<date>12-06-2017 13:55</date>
+		<value>69</value>
+		<unit>bpm</unit>
+	</observation>
+	<observation>
+		<id>8</id>
+		<type>hr</type>
+		<date>12-06-2017 13:56</date>
+		<value>70</value>
+		<unit>bpm</unit>
+	</observation>
+	<observation>
+		<id>9</id>
+		<type>hr</type>
+		<date>12-06-2017 13:57</date>
+		<value>65</value>
+		<unit>bpm</unit>
+	</observation>
+	<observation>
+		<id>10</id>
+		<type>hr</type>
+		<date>12-06-2017 13:58</date>
+		<value>66</value>
+		<unit>bpm</unit>
+	</observation>	
+</vitals>
