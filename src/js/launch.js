@@ -1,10 +1,10 @@
 var iss = getParameterByName('iss');
-//var launch = getParameterByName('launch');
-//var client_id = "hrtracker";
-//var redirect_uri = null;
+var launch = getParameterByName('launch');
+var client_id = "hrtracker";
+var redirect_uri = null;
+var scopes = "";
+//scopes = "launch patient/Patient.read patient/Observation.read patient/Observation.write";
 launch = "http://127.0.0.1:8088/launch.html";
-client_id = "7c2b20f7-8390-4a36-9b5c-6c43d1386a2f";
-var scopes = "launch patient/Patient.read patient/Observation.read patient/Observation.write";
 var redirect_uri = "http://127.0.0.1:8088/index.html";
 //The default_config can be changed in the pipeline to use different config files for different environments.
 var default_config = 'config.json';
@@ -16,6 +16,7 @@ jQuery.get(config_path, function(data) {
         if (data[i].fhir_service === iss || (data[i].provider !== undefined && iss.indexOf(data[i].provider) > -1)){
             client_id = data[i].client_id;
             redirect_uri = data[i].redirect_uri;
+            scopes = data[i].scopes;
             break;
         }
     }

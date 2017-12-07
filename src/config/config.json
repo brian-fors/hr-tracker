@@ -2,24 +2,28 @@
   {
     "fhir_service": "http://localhost:8071/data",
     "redirect_uri": "http://localhost:8088/index.html",
-    "client_id": "hr-tracker"
+    "client_id": "hr-tracker",
+    "scopes": "launch patient/Patient.read patient/Observation.read patient/Observation.write"
   },
   {
     "provider": "cerner",
     "fhir_service": "https://fhir-ehr.sandboxcerner.com/dstu2/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca",
     "redirect_uri": "http://localhost:8088/index.html",
-    "client_id": "7c2b20f7-8390-4a36-9b5c-6c43d1386a2f"
+    "client_id": "eafdce89-5ee8-444e-87d6-b70bbc6e55fe",
+    "scopes": "launch patient/Patient.read patient/Observation.read patient/Observation.write"
   },
   {
     "provider": "epic",
-    "fhir_service": "https://open-ic.epic.com/FHIR/api/FHIR/DSTU2",
+    "fhir_service": "https://open-ic.epic.com/argonaut/api/FHIR",
     "redirect_uri": "http://localhost:8088/index.html",
-    "client_id": "7c2b20f7-8390-4a36-9b5c-6c43d1386a2f"
-  },
+    "client_id": "bbe57c12-0a67-49b2-930b-34fe30736327",
+    "scopes": "launch patient/Patient.read patient/Observation.read"
+},
   {
     "provider": "smart",
     "fhir_service": "https://fhir-api-dstu2.smarthealthit.org",
     "redirect_uri": "http://localhost:8088/index.html",
-    "client_id": "7c2b20f7-8390-4a36-9b5c-6c43d1386a2f"
+    "client_id": "7c2b20f7-8390-4a36-9b5c-6c43d1386a2f",
+    "scopes": "launch patient/Patient.read patient/Observation.read patient/Observation.write"
   }
 ]
