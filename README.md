@@ -9,6 +9,7 @@ DCS HR tracker is hosted as a static web app.
 ````
 install npm
 install nodejs
+npm install http-server -g
 ````
 
 ## Hosting
@@ -25,8 +26,7 @@ The app is available for SMART Launch at:
 
 * launch_url: http://localhost:8088/launch.html
 * redirect_uri: http://localhost:8088/index.html
-* image_url: n/a
 
 With client id:
 
-* tbd
+* {Register app w SMART sandbox provider to obtain client_id; update /config/config.json w client_id}
